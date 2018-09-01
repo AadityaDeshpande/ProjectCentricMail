@@ -1,4 +1,3 @@
-from __future__ import print_function
 '''
 Reading GMAIL using Python
 	- Abhishek Chhibber
@@ -19,11 +18,6 @@ Also, client_secret.json should be saved in the same directory as this file
 '''
 
 # Importing required libraries
-
-from googleapiclient.discovery import build
-from httplib2 import Http
-from oauth2client import file, client, tools
-
 from apiclient import discovery
 from apiclient import errors
 from httplib2 import Http
@@ -43,17 +37,17 @@ SCOPES = 'https://www.googleapis.com/auth/gmail.modify' # we are using modify an
 store = file.Storage('storage.json') 
 creds = store.get()
 if not creds or creds.invalid:
-    flow = client.flow_from_clientsecrets('client_secret.jsInvalid user id specified in request/Deon', SCOPES)
+    flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
     creds = tools.run_flow(flow, store)
-GMAIL = build('gmail', 'v1', http=creds.authorize(Http()))
+GMAIL = discovery.build('gmail', 'v1', http=creds.authorize(Http()))
 
 user_id =  'me'
 label_id_one = 'INBOX'
-
+label_id_two = 'UNREAD'
 
 # Getting all the unread messages from Inbox
 # labelIds can be changed accordingly
-unread_msgs = GMAIL.users().messages().list(userId='me',labelIds=[label_id_one]).execute()
+unread_msgs = GMAIL.users().messages().list(userId='me',labelIds=[label_id_one, label_id_two]).execute()
 
 # We get a dictonary. Now reading values for the key 'messages'
 mssg_list = unread_msgs['messages']
@@ -81,7 +75,7 @@ for mssg in mssg_list:
 
 	for two in headr: # getting the date
 		if two['name'] == 'Date':
-			msg_date = storagetwo['value']
+			msg_date = two['value']
 			date_parse = (parser.parse(msg_date))
 			m_date = (date_parse.date())
 			temp_dict['Date'] = str(m_date)
@@ -107,7 +101,7 @@ for mssg in mssg_list:
 		part_data = part_body['data'] # fetching data from the body
 		clean_one = part_data.replace("-","+") # decoding from Base64 to UTF-8
 		clean_one = clean_one.replace("_","/") # decoding from Base64 to UTF-8
-		clean_two = base64.b64decode (bytes(clean_one, 'UTF-8')) # decoding from Base64 to UTF-8storage
+		clean_two = base64.b64decode (bytes(clean_one, 'UTF-8')) # decoding from Base64 to UTF-8
 		soup = BeautifulSoup(clean_two , "lxml" )
 		mssg_body = soup.body()
 		# mssg_body is a readible form of message body
@@ -133,7 +127,7 @@ print ("Total messaged retrived: ", str(len(final_list)))
 The final_list will have dictionary in the following format:
 {	'Sender': '"email.com" <name@email.com>', 
 	'Subject': 'Lorem ipsum dolor sit ametLorem ipsum dolor sit amet', 
-	'Date': 'yyyy-mm-dd', sudo apt install git
+	'Date': 'yyyy-mm-dd', 
 	'Snippet': 'Lorem ipsum dolor sit amet'
 	'Message_body': 'Lorem ipsum dolor sit amet'}
 The dictionary can be exported as a .csv or into a databse
@@ -142,7 +136,7 @@ The dictionary can be exported as a .csv or into a databse
 #exporting the values as .csv
 with open('CSV_NAME.csv', 'w', encoding='utf-8', newline = '') as csvfile: 
     fieldnames = ['Sender','Subject','Date','Snippet','Message_body']
-    writer = csv.DictWriter(storagecsvfile, fieldnames=fieldnames, delimiter = ',')
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter = ',')
     writer.writeheader()
     for val in final_list:
-      writer.writerow(val)
+        writer.writerow(val)
