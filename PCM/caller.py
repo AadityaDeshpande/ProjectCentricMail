@@ -55,7 +55,9 @@ def gmail_read(username):
 	for mssg in mssg_list:
 		temp_dict = { }
 		m_id = mssg['id'] # get id of individual message
+		temp_dict['m_id']=m_id
 		message = GMAIL.users().messages().get(userId=user_id, id=m_id).execute() # fetch the message using API
+		print(message)
 		payld = message['payload'] # get payload of the message 
 		headr = payld['headers'] # get header of the payload
 
@@ -107,15 +109,8 @@ def gmail_read(username):
 		except :
 			pass
 
-		print (temp_dict)
+		#print (temp_dict)
 		final_list.append(temp_dict) # This will create a dictonary item in the final list
-		
-		# This will mark the messagea as read
-		GMAIL.users().messages().modify(userId=user_id, id=m_id,body={ 'removeLabelIds': ['UNREAD']}).execute() 
-		
-
-
-
 	print ("Total messaged retrived: ", str(len(final_list)))
 
 	'''
@@ -130,7 +125,7 @@ def gmail_read(username):
 
 	#exporting the values as .csv
 	with open(f'{username}.csv', 'w', encoding='utf-8', newline = '') as csvfile: 
-	    fieldnames = ['Sender','Subject','Date','Snippet','Message_body']
+	    fieldnames = ['m_id','Sender','Subject','Date','Snippet','Message_body']
 	    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter = ',')
 	    writer.writeheader()
 	    for val in final_list:
