@@ -1,0 +1,14 @@
+
+commands:
+
+sudo apt install git
+
+sudo apt install python3-pip
+
+pip3 install --upgrade google-api-python-client
+
+pip3 install oauth2client
+
+pip3 install bs4
+
+pip3 install python-dateutil
