@@ -5,7 +5,7 @@ def is_spam(mail):
 	
 	spam_words = ['free','paid','discount','price','off','cheap','trade','.inc','limited','exchange','flat','latest','new','999','available','lose','win','loss','sale','sponser','income','dob','loan','earn','money','login','gold','silver','100000','spin','hurry',]
 	
-	sensitive_words = ['password','credit','loan','debit','username','e-mail','g-mail','click','address','phone','privacy','policy','delivery','free','discount','99','sponser','loan','bank','details','pin','otp','subscribe','www.','enter','gmail','email','$','antivirus','+',]
+	sensitive_words = ['password','credit','loan','debit','username','e-mail','g-mail','click','address','phone','privacy','policy','delivery','free','discount','99','99%','sponser','loan','bank','details','pin','otp','subscribe','www.','enter','voucher','vouchers','gmail','email','$','antivirus','+',]
 
 	# encrypted words for profanity filter
 	alp = "abcdefghijklmnopqrstuvwxyz*"
