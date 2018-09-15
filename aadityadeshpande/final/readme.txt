@@ -1,3 +1,6 @@
+plz refer the finished folder
+
+
 steps:
  1) first run the caller.py (Environment must be set)
  2) log in to the target account from where you want to scan the mails
@@ -9,3 +12,4 @@ future update to do
 1)output of auto.py in a csv file 
 2)output.csv
 3)
+
