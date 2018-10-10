@@ -1,5 +1,6 @@
 #! /bin/sh
-sudo apt install git \
+sudo apt-get install python3.6 \
+&& sudo apt install git \
 && sudo apt install git --upgrade \
 && sudo apt install python3-pip \
 && sudo apt install --upgrade python3-pip \
