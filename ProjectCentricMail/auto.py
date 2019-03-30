@@ -4,6 +4,7 @@ import time
 import collections
 import os
 
+
 def is_spam(mail):
 	module_dir = os.path.dirname(__file__)	
 	pattern = r"^http:"
